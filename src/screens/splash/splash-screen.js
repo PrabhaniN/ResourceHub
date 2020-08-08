@@ -1,18 +1,13 @@
-// import { StatusBar } from "expo-status-bar";
 import React from "react";
+import { render } from "react-dom";
+import "react-native-gesture-handler";
 import { StyleSheet, SafeAreaView, Image, Button } from "react-native";
 
-import Home from "../bottomtabs/home-tab";
-
-function Onboarding() {
-  return (
-    <SafeAreaView style={styles.container}>
-      <Image source={require("../../../assets/logo.png")} style={styles.logo} />
-      <Button title="next" onPress={() => {}} />
-      {/* <StatusBar style="auto" /> */}
-    </SafeAreaView>
-  );
-}
+const Onboarding = () => (
+  <SafeAreaView style={styles.container}>
+    <Image source={require("../../../assets/logo.png")} style={styles.logo} />
+  </SafeAreaView>
+);
 
 export default Onboarding;
 
