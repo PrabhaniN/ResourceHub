@@ -13,18 +13,22 @@ class ForumList extends Component {
   }
 
   render() {
-    const { navigation, forums } = this.props;
+    const { navigation, forums, isLoading } = this.props;
     console.log(forums);
 
     return (
       <ScrollView style={globalStyles.container}>
         <SafeAreaView>
+          {isLoading && <Text>Loading...</Text>}
           {forums &&
-            forums.map((forum) => {
+            forums.map((forum) => (
               <Card
                 style={styles.notifiaction_thread}
                 onPress={() =>
-                  navigation.navigate("ForumStack", { screen: "ViewForum" })
+                  navigation.navigate("ForumStack", {
+                    screen: "ViewForum",
+                    params: forum,
+                  })
                 }
               >
                 <Card.Content style={{ flexDirection: "row" }}>
@@ -39,13 +43,15 @@ class ForumList extends Component {
                       ellipsizeMode="tail"
                       numberOfLines={1}
                     >
-                      {forum}
+                      {forum.title}
                     </Text>
-                    <Text style={styles.time}>Time</Text>
+                    <Text style={styles.time}>
+                      {forum.createdAt.toString()}
+                    </Text>
                   </View>
                 </Card.Content>
-              </Card>;
-            })}
+              </Card>
+            ))}
         </SafeAreaView>
       </ScrollView>
     );
@@ -54,6 +60,7 @@ class ForumList extends Component {
 
 const mapStateToProps = (state) => ({
   forums: state.forum.forums,
+  isLoading: state.forum.isLoading,
 });
 
 const mapDispatchToProps = (dispatch) => {

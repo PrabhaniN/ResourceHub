@@ -67,11 +67,10 @@ class Notifications extends Component {
             </Text>
           </View>
           <Card.Content>
+            {isLoading && <Text>Loading...</Text>}
             {forums &&
               forums.map((forum) => (
-                <View style={styles.notifiaction_thread}>
-                  {isLoading && <Text>Loading</Text>}
-
+                <View style={styles.notifiaction_thread} key={forum.id}>
                   <Avatar.Image
                     source={require("../../../assets/user.png")}
                     size={48}
@@ -82,7 +81,7 @@ class Notifications extends Component {
                     ellipsizeMode="tail"
                     numberOfLines={1}
                   >
-                    Sample title
+                    {forum.title}
                   </Text>
                 </View>
               ))}

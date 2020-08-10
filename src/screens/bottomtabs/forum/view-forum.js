@@ -5,7 +5,10 @@ import { ScrollView } from "react-native-gesture-handler";
 import { Avatar, Paragraph } from "react-native-paper";
 import { globalStyles } from "../../../../styles/global";
 
-function ViewForum() {
+function ViewForum(props) {
+  const { params } = props.route;
+  console.log(params);
+
   return (
     <ScrollView style={globalStyles.container}>
       <SafeAreaView>
@@ -15,14 +18,14 @@ function ViewForum() {
             size={48}
           />
           <View style={{ flexDirection: "column" }}>
-            <Text style={styles.forum_title}>Forum Title Goes Here</Text>
-            <Text style={styles.forum_details}>Date and time</Text>
-            <Text style={styles.forum_details}>Owner</Text>
+            <Text style={styles.forum_title}>{params.title}</Text>
+            <Text style={styles.forum_details}>
+              {params.createdAt.toString()}
+            </Text>
+            <Text style={styles.forum_details}>{params.createdBy}</Text>
           </View>
         </View>
-        <Text style={styles.description}>
-          Description goes here Lorem Ipsem bla bla bla
-        </Text>
+        <Text style={styles.description}>{params.content}</Text>
       </SafeAreaView>
     </ScrollView>
   );
