@@ -1,14 +1,15 @@
-import React, { Component, useState } from "react";
+import React from "react";
 import { render } from "react-dom";
 import "react-native-gesture-handler";
 import { Feather } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import Home from "../screens/bottomtabs/home";
-import Notifications from "../screens/bottomtabs/notification";
+// import Notifications from "../screens/bottomtabs/notification";
 import { globalStyles } from "../../styles/global";
 import ResourceStack from "../navigation/resource-stack";
 import ProfileStack from "../navigation/profile-stack";
+import NotificationsStack from "../navigation/notification-stack";
 
 const BottomTabs = createBottomTabNavigator();
 
@@ -46,7 +47,7 @@ BottomTabsScreen = () => (
     />
     <BottomTabs.Screen
       name="Notifications"
-      component={Notifications}
+      component={NotificationsStack}
       options={{
         tabBarLabel: "Notifications",
         tabBarIcon: ({ color }) => (

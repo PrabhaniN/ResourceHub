@@ -5,15 +5,16 @@ import * as Font from "expo-font";
 import { AppLoading } from "expo";
 import { StatusBar } from "expo-status-bar";
 
-import * as firebase from "firebase";
-import { firebaseConfig } from "./config";
-
 import BottomTabsScreen from "./src/components/bottomtabs";
 import AuthStack from "./src/navigation/auth-stack";
 import Onboarding from "./src/screens/splash/splash-screen";
-// import createAppbar from "./src/components/appbar"
 
-firebase.initializeApp(firebaseConfig);
+import { createStore, applyMiddleware } from "redux";
+import { Provider } from "react-redux";
+import rootReducer from "./src/store/reducers/rootReducer";
+import thunk from "redux-thunk";
+
+// import createAppbar from "./src/components/appbar"
 
 // const Stack = createStackNavigator();
 // const BottomTabs = createBottomTabNavigator();
@@ -39,18 +40,22 @@ export default function App() {
     }, 500);
   }, []);
 
+  const store = createStore(rootReducer, applyMiddleware(thunk));
+
   if (fontLoaded) {
     return (
-      <NavigationContainer>
-        {isLoading ? (
-          <Onboarding />
-        ) : user ? (
-          <BottomTabsScreen />
-        ) : (
-          <AuthStack />
-        )}
-        <StatusBar style="light" backgroundColor="#00003D" />
-      </NavigationContainer>
+      <Provider store={store}>
+        <NavigationContainer>
+          {isLoading ? (
+            <Onboarding />
+          ) : user ? (
+            <BottomTabsScreen />
+          ) : (
+            <AuthStack />
+          )}
+          <StatusBar style="light" backgroundColor="#00003D" />
+        </NavigationContainer>
+      </Provider>
     );
   } else {
     return (

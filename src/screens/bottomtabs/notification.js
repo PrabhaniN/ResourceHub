@@ -1,14 +1,109 @@
-import React from "react";
-import { StyleSheet, Text } from "react-native";
+import React, { Component } from "react";
+import { StyleSheet, View, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { globalStyles } from "../../../styles/global";
+import { Card, Title, Avatar, Paragraph } from "react-native-paper";
+import { getForums } from "../../store/actions/forumActions";
+import { connect } from "react-redux";
 
-Notifications = () => (
-  <SafeAreaView style={styles.container}>
-    <Text>Notifications Tab</Text>
-  </SafeAreaView>
-);
+class Notifications extends Component {
+  componentDidMount() {
+    this.props.getForums();
+  }
 
-export default Notifications;
+  render() {
+    const { navigation, forums, isLoading } = this.props;
+
+    console.log(isLoading);
+
+    return (
+      <SafeAreaView style={globalStyles.container}>
+        <Card
+          style={{ borderRadius: 12, marginBottom: 20, width: 370 }}
+          onPress={() =>
+            navigation.navigate("NotificationsListStack", {
+              screen: "NotificationsList",
+            })
+          }
+        >
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Title style={styles.title}>Notifications</Title>
+            <Text style={{ fontFamily: "opensans-regular", marginRight: 15 }}>
+              View all
+            </Text>
+          </View>
+          <Card.Content>
+            <View style={styles.notifiaction_thread}>
+              <Avatar.Image
+                source={require("../../../assets/user.png")}
+                size={48}
+                style={{ borderRadius: 24 }}
+              />
+              <Text
+                style={styles.description}
+                ellipsizeMode="tail"
+                numberOfLines={2}
+              >
+                Description goes here bla bla bla
+              </Text>
+            </View>
+          </Card.Content>
+        </Card>
+        <Card
+          style={{ borderRadius: 12 }}
+          onPress={() =>
+            navigation.navigate("ForumStack", { screen: "ForumList" })
+          }
+        >
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Title style={styles.title}>Forum</Title>
+            <Text
+              style={{ fontFamily: "opensans-regular", marginRight: 15 }}
+              accessibilityRole="link"
+            >
+              View all
+            </Text>
+          </View>
+          <Card.Content>
+            <View style={styles.notifiaction_thread}>
+              {isLoading && <Text>Loading</Text>}
+              {forums &&
+                forums.map((forum) => {
+                  <div>
+                    <Avatar.Image
+                      source={require("../../../assets/user.png")}
+                      size={48}
+                      style={{ borderRadius: 24 }}
+                    />
+                    <Text
+                      style={styles.forum_title}
+                      ellipsizeMode="tail"
+                      numberOfLines={1}
+                    >
+                      {forum.title}
+                    </Text>
+                  </div>;
+                })}
+            </View>
+          </Card.Content>
+        </Card>
+      </SafeAreaView>
+    );
+  }
+}
+
+const mapStateToProps = (state) => ({
+  forums: state.forum.forums,
+  isLoading: state.forum.isLoading,
+});
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getForums: () => dispatch(getForums()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Notifications);
 
 const styles = StyleSheet.create({
   container: {
@@ -16,5 +111,29 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+  },
+  title: {
+    fontFamily: "ubuntu-medium",
+    color: "#00005C",
+    marginLeft: 15,
+    marginBottom: 20,
+    marginTop: 10,
+    flexGrow: 1,
+  },
+  notifiaction_thread: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  description: {
+    fontFamily: "opensans-regular",
+    marginLeft: 15,
+    // flexGrow: 1,
+    textAlign: "left",
+  },
+  forum_title: {
+    fontFamily: "opensans-semibold",
+    fontSize: 16,
+    marginLeft: 15,
   },
 });

@@ -7,7 +7,12 @@ import { Feather } from "@expo/vector-icons";
 
 import { globalStyles } from "../../../../styles/global";
 
-function SubjectResources() {
+const SubjectResources = (props) => {
+  const { params } = props.route;
+  const { navigation } = props;
+
+  console.log(params);
+
   return (
     <ScrollView style={globalStyles.container}>
       <SafeAreaView>
@@ -15,7 +20,7 @@ function SubjectResources() {
           style={{
             flexDirection: "row",
             marginBottom: 30,
-            // alignItems: "stretch",
+            alignItems: "stretch",
           }}
         >
           <Title
@@ -28,34 +33,47 @@ function SubjectResources() {
               flexGrow: 1,
             }}
           >
-            Subject Name
+            {params.name}
           </Title>
           <Feather
-            name="search"
+            name="plus"
             size={24}
             color="#00005C"
             style={{ alignSelf: "flex-end", marginRight: 20 }}
+            onPress={() => {
+              navigation.navigate("SubjectResourceStack", {
+                screen: "AddResources",
+                params: { id: params.id },
+              });
+            }}
           />
         </View>
-        <Card style={styles.card}>
-          <Card.Content>
-            <Title style={styles.title}>Resource Title</Title>
-            <Paragraph style={{ fontSize: 15, textAlign: "justify" }}>
-              Resource Description Lorem Ipsem bla bla bla
-            </Paragraph>
-            <View style={{ flex: 0, flexDirection: "row", marginTop: 20 }}>
-              <Image
-                source={require("../../../../assets/icons/pdf.png")}
-                style={styles.icon}
-              />
-              <Text style={styles.link}>document.pdf</Text>
-            </View>
-          </Card.Content>
-        </Card>
+        {params.resources &&
+          params.resources.map((resource) => (
+            <Card style={styles.card} key={resource.title}>
+              <Card.Content>
+                <Title style={styles.title}>{resource.title}</Title>
+                <Paragraph
+                  style={{ fontSize: 15, textAlign: "justify" }}
+                  ellipsizeMode="tail"
+                  numberOfLines={2}
+                >
+                  {resource.content}
+                </Paragraph>
+                <View style={{ flex: 0, flexDirection: "row", marginTop: 20 }}>
+                  <Image
+                    source={require("../../../../assets/icons/pdf.png")}
+                    style={styles.icon}
+                  />
+                  <Text style={styles.link}>document.pdf</Text>
+                </View>
+              </Card.Content>
+            </Card>
+          ))}
       </SafeAreaView>
     </ScrollView>
   );
-}
+};
 
 export default SubjectResources;
 

@@ -11,14 +11,22 @@ import { ScrollView } from "react-native-gesture-handler";
 import { SubjectResources } from "./subject-resources/subject-resources";
 
 function Profile({ navigation }) {
+  const username = "John Doe";
+  const year = "1st";
+  const indexNo = "12345678";
+  const regNo = "2017/CS/001";
+  const gender = "male";
+  const course_code = "SCS1212";
+  const course_name = "Database";
+
   return (
     <ScrollView style={globalStyles.container}>
       <SafeAreaView>
         <View style={{ flex: 0, flexDirection: "row" }}>
           <Icon name="user" size={120} style={styles.profile_image} />
           <View style={{ flex: 1, flexDirection: "column" }}>
-            <Text style={styles.name}>Name</Text>
-            <Text style={styles.year}>Year</Text>
+            <Text style={styles.name}>{username}</Text>
+            <Text style={styles.year}>{year} Year</Text>
           </View>
         </View>
         <Text
@@ -54,7 +62,7 @@ function Profile({ navigation }) {
               marginLeft: 40,
             }}
           >
-            12345678
+            {indexNo}
           </Text>
         </View>
         <View style={{ flex: 0, flexDirection: "row" }}>
@@ -78,7 +86,7 @@ function Profile({ navigation }) {
               marginLeft: 51,
             }}
           >
-            CS/131/2018
+            {regNo}
           </Text>
         </View>
         <View style={{ flex: 0, flexDirection: "row" }}>
@@ -102,7 +110,7 @@ function Profile({ navigation }) {
               marginLeft: 50,
             }}
           >
-            Female
+            {gender}
           </Text>
         </View>
         <Text
@@ -128,22 +136,7 @@ function Profile({ navigation }) {
                 fontSize: 15,
               }}
             >
-              Course code - Course Name
-            </Text>
-          </Card.Content>
-        </Card>
-        <Card
-          style={styles.subject_card}
-          onPress={() => navigation.navigate("SubjectResources")}
-        >
-          <Card.Content style={styles.card_details}>
-            <Text
-              style={{
-                fontFamily: "opensans-regular",
-                fontSize: 15,
-              }}
-            >
-              Course code - Course Name
+              {course_code} - {course_name}
             </Text>
           </Card.Content>
         </Card>
