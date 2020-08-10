@@ -4,6 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { globalStyles } from "../../../styles/global";
 import { Card, Title, Avatar, Paragraph } from "react-native-paper";
 import { getForums } from "../../store/actions/forumActions";
+import { getNotifications } from "../../store/actions/notificationActions";
 import { connect } from "react-redux";
 
 class Notifications extends Component {
@@ -11,82 +12,93 @@ class Notifications extends Component {
 
   componentDidMount() {
     this.props.getForums();
+    this.props.getNotifications();
   }
 
   render() {
-    const { navigation, forums, isLoading } = this.props;
+    const { navigation, notifications, forums, isLoading } = this.props;
 
-    console.log(isLoading, forums);
+    console.log(isLoading, forums, notifications);
 
     return (
       <SafeAreaView style={globalStyles.container}>
-        <Card
-          style={{ borderRadius: 12, marginBottom: 20, width: 370 }}
-          onPress={() =>
-            navigation.navigate("NotificationsListStack", {
-              screen: "NotificationsList",
-            })
-          }
-        >
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Title style={styles.title}>Notifications</Title>
-            <Text style={{ fontFamily: "opensans-regular", marginRight: 15 }}>
-              View all
-            </Text>
-          </View>
-          <Card.Content>
-            <View style={styles.notifiaction_thread}>
-              <Avatar.Image
-                source={require("../../../assets/user.png")}
-                size={48}
-                style={{ borderRadius: 24 }}
-              />
-              <Text
-                style={styles.description}
-                ellipsizeMode="tail"
-                numberOfLines={2}
-              >
-                Description goes here bla bla bla
-              </Text>
-            </View>
-          </Card.Content>
-        </Card>
-        <Card
-          style={{ borderRadius: 12 }}
-          onPress={() =>
-            navigation.navigate("ForumStack", { screen: "ForumList" })
-          }
-        >
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Title style={styles.title}>Forum</Title>
-            <Text
-              style={{ fontFamily: "opensans-regular", marginRight: 15 }}
-              accessibilityRole="link"
+        {isLoading ? (
+          <Text>Loading...</Text>
+        ) : (
+          <View>
+            <Card
+              style={{ borderRadius: 12, marginBottom: 20, width: 370 }}
+              onPress={() =>
+                navigation.navigate("NotificationsListStack", {
+                  screen: "NotificationsList",
+                })
+              }
             >
-              View all
-            </Text>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Title style={styles.title}>Notifications</Title>
+                <Text
+                  style={{ fontFamily: "opensans-regular", marginRight: 15 }}
+                >
+                  View all
+                </Text>
+              </View>
+              <Card.Content>
+                {notifications &&
+                  notifications.map((notification) => (
+                    <View style={styles.notifiaction_thread}>
+                      <Avatar.Image
+                        source={require("../../../assets/user.png")}
+                        size={48}
+                        style={{ borderRadius: 24 }}
+                      />
+                      <Text
+                        style={styles.description}
+                        ellipsizeMode="tail"
+                        numberOfLines={2}
+                      >
+                        {notification.title}
+                      </Text>
+                    </View>
+                  ))}
+              </Card.Content>
+            </Card>
+            <Card
+              style={{ borderRadius: 12 }}
+              onPress={() =>
+                navigation.navigate("ForumStack", { screen: "ForumList" })
+              }
+            >
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Title style={styles.title}>Forum</Title>
+                <Text
+                  style={{ fontFamily: "opensans-regular", marginRight: 15 }}
+                  accessibilityRole="link"
+                >
+                  View all
+                </Text>
+              </View>
+              <Card.Content>
+                {forums &&
+                  forums.map((forum) => (
+                    <View style={styles.notifiaction_thread} key={forum.id}>
+                      <Avatar.Image
+                        source={require("../../../assets/user.png")}
+                        size={48}
+                        style={{ borderRadius: 24 }}
+                      />
+                      <Text
+                        style={styles.forum_title}
+                        ellipsizeMode="tail"
+                        numberOfLines={1}
+                      >
+                        {forum.title}
+                      </Text>
+                    </View>
+                  ))}
+              </Card.Content>
+            </Card>
           </View>
-          <Card.Content>
-            {isLoading && <Text>Loading...</Text>}
-            {forums &&
-              forums.map((forum) => (
-                <View style={styles.notifiaction_thread} key={forum.id}>
-                  <Avatar.Image
-                    source={require("../../../assets/user.png")}
-                    size={48}
-                    style={{ borderRadius: 24 }}
-                  />
-                  <Text
-                    style={styles.forum_title}
-                    ellipsizeMode="tail"
-                    numberOfLines={1}
-                  >
-                    {forum.title}
-                  </Text>
-                </View>
-              ))}
-          </Card.Content>
-        </Card>
+        )}
       </SafeAreaView>
     );
   }
@@ -94,12 +106,14 @@ class Notifications extends Component {
 
 const mapStateToProps = (state) => ({
   forums: state.forum.forums,
-  isLoading: state.forum.isLoading,
+  notifications: state.notification.notifications,
+  isLoading: state.forum.isLoading || state.notification.isLoading,
 });
 
 const mapDispatchToProps = (dispatch) => {
   return {
     getForums: () => dispatch(getForums()),
+    getNotifications: () => dispatch(getNotifications()),
   };
 };
 
