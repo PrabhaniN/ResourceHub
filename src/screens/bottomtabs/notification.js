@@ -7,6 +7,8 @@ import { getForums } from "../../store/actions/forumActions";
 import { connect } from "react-redux";
 
 class Notifications extends Component {
+  state = {};
+
   componentDidMount() {
     this.props.getForums();
   }
@@ -14,7 +16,7 @@ class Notifications extends Component {
   render() {
     const { navigation, forums, isLoading } = this.props;
 
-    console.log(isLoading);
+    console.log(isLoading, forums);
 
     return (
       <SafeAreaView style={globalStyles.container}>
@@ -65,26 +67,25 @@ class Notifications extends Component {
             </Text>
           </View>
           <Card.Content>
-            <View style={styles.notifiaction_thread}>
-              {isLoading && <Text>Loading</Text>}
-              {forums &&
-                forums.map((forum) => {
-                  <div>
-                    <Avatar.Image
-                      source={require("../../../assets/user.png")}
-                      size={48}
-                      style={{ borderRadius: 24 }}
-                    />
-                    <Text
-                      style={styles.forum_title}
-                      ellipsizeMode="tail"
-                      numberOfLines={1}
-                    >
-                      {forum.title}
-                    </Text>
-                  </div>;
-                })}
-            </View>
+            {forums &&
+              forums.map((forum) => (
+                <View style={styles.notifiaction_thread}>
+                  {isLoading && <Text>Loading</Text>}
+
+                  <Avatar.Image
+                    source={require("../../../assets/user.png")}
+                    size={48}
+                    style={{ borderRadius: 24 }}
+                  />
+                  <Text
+                    style={styles.forum_title}
+                    ellipsizeMode="tail"
+                    numberOfLines={1}
+                  >
+                    Sample title
+                  </Text>
+                </View>
+              ))}
           </Card.Content>
         </Card>
       </SafeAreaView>
