@@ -1,26 +1,28 @@
 {
   "expo": {
-    "name": "resource-hub",
+    "name": "Resource Hub",
     "slug": "resource-hub",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/logo-icon.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/logo-favicon.png"
+    },
+    "android": {
+      "package": "resourcehub",
+      "versionCode": 1
     }
   }
 }
