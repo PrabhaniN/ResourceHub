@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, StyleSheet, View } from "react-native";
+import { Text, StyleSheet, View, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/Feather";
 import { Appbar, Card } from "react-native-paper";
@@ -11,19 +11,23 @@ import { ScrollView } from "react-native-gesture-handler";
 import { SubjectResources } from "./subject-resources/subject-resources";
 
 function Profile({ navigation }) {
-  const username = "John Doe";
-  const year = "1st";
-  const indexNo = "12345678";
+  const username = "P C Nanayakkara";
+  const year = "3rd";
+  const indexNo = "17001137";
   const regNo = "2017/CS/001";
-  const gender = "male";
-  const course_code = "SCS1212";
-  const course_name = "Database";
+  const gender = "Female";
+  const course_code = "SCS2210";
+  const course_name = "Database I";
 
   return (
     <ScrollView style={globalStyles.container}>
       <SafeAreaView>
         <View style={{ flex: 0, flexDirection: "row" }}>
-          <Icon name="user" size={120} style={styles.profile_image} />
+          {/* <Icon name="user" size={120} style={styles.profile_image} /> */}
+          <Image
+            source={require("../../../assets/user.png")}
+            style={styles.profile_image}
+          />
           <View style={{ flex: 1, flexDirection: "column" }}>
             <Text style={styles.name}>{username}</Text>
             <Text style={styles.year}>{year} Year</Text>
@@ -149,24 +153,26 @@ export default Profile;
 
 const styles = StyleSheet.create({
   profile_image: {
-    marginTop: 32,
-    marginLeft: 35,
+    marginTop: 20,
+    marginLeft: 15,
     borderRadius: 60,
+    width: 120,
+    height: 120,
   },
   name: {
     fontSize: 24,
     // fontWeight: "600",
     fontFamily: "ubuntu-bold",
     color: "#4E546B",
-    top: 70,
-    marginLeft: 40,
+    top: 50,
+    marginLeft: 30,
   },
   year: {
     fontSize: 16,
     fontWeight: "600",
     fontFamily: "opensans-semibold",
-    marginLeft: 40,
-    top: 70,
+    marginLeft: 30,
+    top: 50,
     color: "#4E546B",
   },
   subject_card: {

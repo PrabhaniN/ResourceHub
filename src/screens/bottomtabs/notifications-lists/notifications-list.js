@@ -74,8 +74,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(NotificationsList);
 const styles = StyleSheet.create({
   notifiaction_thread: {
     alignItems: "flex-start",
-    marginBottom: 20,
+    alignSelf: "center",
+    marginBottom: 10,
     marginHorizontal: 0,
+    width: 370,
   },
   description: {
     fontFamily: "opensans-regular",
@@ -83,6 +85,7 @@ const styles = StyleSheet.create({
     // flexGrow: 1,
     textAlign: "left",
     marginRight: 20,
+    width: 270,
   },
   time: {
     fontFamily: "opensans-regular",

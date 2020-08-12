@@ -142,12 +142,15 @@ const styles = StyleSheet.create({
   description: {
     fontFamily: "opensans-regular",
     marginLeft: 15,
+    width: 275,
     // flexGrow: 1,
+    // overflow: "hidden",
     textAlign: "left",
   },
   forum_title: {
     fontFamily: "opensans-semibold",
     fontSize: 16,
     marginLeft: 15,
+    width: 275,
   },
 });

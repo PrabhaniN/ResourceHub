@@ -82,6 +82,7 @@ const styles = StyleSheet.create({
     fontFamily: "opensans-semibold",
     fontSize: 16,
     marginLeft: 15,
+    width: 275,
   },
   time: {
     fontFamily: "opensans-regular",

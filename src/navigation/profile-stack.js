@@ -38,11 +38,7 @@ function ProfileStack() {
         },
       }}
     >
-      <Stack.Screen
-        name="Profile"
-        component={Profile}
-        // children={createAppbar}
-      />
+      <Stack.Screen name="Profile" component={Profile} />
       <Stack.Screen name="SubjectResources" component={SubjectResources} />
     </Stack.Navigator>
   );
