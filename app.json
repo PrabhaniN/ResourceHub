@@ -21,7 +21,7 @@
       "favicon": "./assets/logo-favicon.png"
     },
     "android": {
-      "package": "resourcehub",
+      "package": "prabhanin.com.resourcehub",
       "versionCode": 1
     }
   }
